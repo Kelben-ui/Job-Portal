@@ -1,15 +1,34 @@
 <?php
-  require_once '../models/CompanyProfile.php';
+  require_once 'D:/Xampp/htdocs/JobPortal/app/models/CompanyProfile.php';
+  require_once "D:/Xampp/htdocs/JobPortal/app/Services/SessionManager.php";
   class CompProfileController
   {
     private $profile;
+    private $session;
 
     public function ViewProfile()
     { 
-        $profile = new CompanyProfile();
-        $CompProfile = $this->profile->getProfileByName($_SESSION['Company_name']);
-        http_response_code(200);
-        echo json_encode(['status' => 'success', 'data' => $CompProfile]);
+        $this->session = new SessionManager();
+        $email = $this->session->get("company_email");
+        $this->profile = new CompanyProfile();
+
+        if(!$email)
+        {
+          echo json_encode(['status' => 'error', 'message' => "Not logged in"]);
+        }
+        else 
+        {
+          if($CompProfile = $this->profile->getProfileByName($email))
+          {
+          http_response_code(200);
+          echo json_encode(['status' => 'success', 'data' => $CompProfile]);
+          }
+          else{
+          http_response_code(400);
+          echo json_encode(['status' => 'failed', 'data' => "error"]);
+          }
+        }
+        
     }
 
     public function EditProfile($data)

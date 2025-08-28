@@ -1,6 +1,6 @@
 <?php
 
-  require_once '../config/config.php';
+  require_once 'D:/Xampp/htdocs/JobPortal/app/config/config.php';
   class EmployeeProfile
   { 
     private $name;

@@ -1,6 +1,7 @@
 <?php
   
-   require_once "../models/Offers.php";
+   require_once "D:/Xampp/htdocs/JobPortal/app/models/Offers.php";
+   require_once "D:/Xampp/htdocs/JobPortal/app/helpers/InputHelper.php";
 
    class OfferController
    {
@@ -30,15 +31,15 @@
     // }
 
     public function create_offer($data)
-    { 
+    {
         $data['offer_title'] = InputHelper::sanitizeString($data['offer_title']);
         $data['Description'] = InputHelper::sanitizeString($data['Description']);
         $data['Requirements'] = InputHelper::sanitizeString($data['Requirements']);
         $data['location'] = InputHelper::sanitizeString($data['location']);
         $data['Salary'] = InputHelper::sanitizeString($data['Salary']);
         $data['Deadline'] = InputHelper::sanitizeString($data['Deadline']);
-        $data['Status'] = InputHelper::sanitizeString($data['status']);
-        $data['Offer_type'] = InputHelper::sanitizeString($data['offer_type']);
+        $data['Status'] = InputHelper::sanitizeString($data['Status']);
+        $data['Offer_type'] = InputHelper::sanitizeString($data['Offer_type']);
 
         if($this->model->create_offer($data))
         {
@@ -118,4 +119,4 @@
    }
 
    
-?>
+?> 

@@ -1,6 +1,6 @@
 <?php
 
-  require_once '../config/config.php';
+  require_once 'D:/Xampp/htdocs/JobPortal/app/config/config.php';
   class CompanyProfile 
   {
     private $name;
@@ -14,17 +14,24 @@
     private $about;
     private $conn;
     private $password;
+    
 
-    public function getProfileByName($company_name)
-    {
+    public function getProfileByName($company_email)
+    { 
       $conn = new Connection();
-      $this->name = $company_name;
-      $findProfile = "SELECT * FROM Companies WHERE Comp_name = ?";
+      $this->email = $company_email;
+      $findProfile = "SELECT * FROM Companies WHERE Comp_email = ?";
       $stmt = $conn->prepare($findProfile);
-      $stmt->bind_param("s", $this->name);
+      $stmt->bind_param("s", $this->email);
       $stmt->execute();
-
-      return $stmt->get_result()->fetch_assoc();
+      
+      $res = $stmt->get_result();
+      $profile = [];
+      while($row = $res->fetch_assoc())
+      {
+        $profile [] = $row; 
+      }
+      return $profile;
     }
 
     public function updateProfile($data)

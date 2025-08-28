@@ -1,5 +1,5 @@
 <?php
-  require "../config/config.php";
+  require "D:/Xampp/htdocs/JobPortal/app/config/config.php";
 
   class User {
     protected $name;
@@ -28,7 +28,7 @@
 
         $sql = "SELECT user_id FROM users WHERE email = ?";
         $preparedSql =$connection->prepare($sql);
-        $preparedSql->bind_param("s", $email);
+        $preparedSql->bind_param("s", $this->email);
         $preparedSql->execute();
         $result = $preparedSql->get_result();
         // $email_address = $this->email;
@@ -69,25 +69,25 @@
         $this->password = $data['password'];
         $this->role = $data['role'];
         $sql = "SELECT password FROM users WHERE email = ?";
-        $preparedSql = $connection->query($sql);
-        $preparedSql->bind_param("s", $email);
-
-        $email = $this->email;
+        $preparedSql = $connection->prepare($sql);
+        $preparedSql->bind_param("s", $this->email);
 
         $preparedSql->execute();
         $result = $preparedSql->get_result();
+        $res = mysqli_fetch_assoc($result);
+
 
         //$result = $connection->query($sql);
 
-        if(password_verify($this->password,$result))
+        if(password_verify($this->password,$res['password']))
         {
           if($this->role == 'employee')
           {
-            return "employee";
+            return "Employee";
           }
           if($this->role == 'Admin')
           {
-            return "admin";
+            return "Admin";
           }
         }
         else 
@@ -99,9 +99,23 @@
     public function logout ()
     {
       $connection = new Connection ();
-      $connection->disconnect();
-
-      return true;
+      if($connection->disconnect())
+      {
+        return true;
+      }
+      else{
+        return false;
+      }
       
     }
+
+    public function getUsers()
+    {
+      $conn = new Connection();
+      $query = "SELECT * FROM Users WHERE role = 'Applicant'";
+      $res = $conn->query($query);
+
+      return $res->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
   } 

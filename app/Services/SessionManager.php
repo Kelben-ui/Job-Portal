@@ -8,12 +8,13 @@
 
     public function set ($key,$value)
     {
-        $_SESSION['$key'] = $value;
+        $_SESSION[$key] = $value;
     }
 
     public function get ($key)
     {
-        return $_SESSION['$key'];
+        $res = $_SESSION[$key];
+        return $res;
     }
 
     public function destroy ()

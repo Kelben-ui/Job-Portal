@@ -14,7 +14,7 @@
 
     public static function validateEmail($email)
     {
-        return filter_var(trim($email), FILTER_VALIDATE_EMAIL) !== false;
+        return filter_var(trim($email), FILTER_VALIDATE_EMAIL); //!== false
     }
 
     public static function sanitizeUrl($url)

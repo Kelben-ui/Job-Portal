@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /JobPortal/app/api/
+
+# If the requested file or directory exists don't rewrite
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d 
+
+#Otherwise, send everything to index.php
+#RewriteRule ^(.*)$ index.php?route=$1 [L,QSA]

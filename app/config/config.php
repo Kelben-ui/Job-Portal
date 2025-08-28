@@ -46,7 +46,7 @@
 
     public function disconnect ()
     {
-      $conn->close();
+      return $this->conn->close();
     }
     
     
